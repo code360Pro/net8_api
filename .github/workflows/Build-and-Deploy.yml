@@ -1,21 +1,21 @@
+# filepath: /c:/Users/rashi/source/repos/net8_api/.github/workflows/Build-and-Deploy.yml
 name: Deploy to Cloud Run
 
 on:
   push:
     branches:
       - develop
-
   workflow_dispatch:
-   inputs:
-    ENVIRONMENT:
-      description: 'ENvironment to deploy to'
-      required: true
-      type: choice
-      options:
-        - dev
-        - staging
-        - prod
-      default: 'dev'
+    inputs:
+      ENVIRONMENT:
+        description: 'Environment to deploy to'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+        default: 'dev'
 
 jobs:
   deploy:
@@ -29,14 +29,21 @@ jobs:
         id: set-env
         run: |
           echo "ENVIRONMENT=${{ github.event.inputs.ENVIRONMENT }}" >> $GITHUB_ENV
+          if [ "${{ github.event.inputs.ENVIRONMENT }}" == "dev" ]; then
+            echo "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID_DEV }}" >> $GITHUB_ENV
+            echo "GCP_CREDENTIALS=${{ secrets.GCP_CREDENTIALS_DEV }}" >> $GITHUB_ENV
+          elif [ "${{ github.event.inputs.ENVIRONMENT }}" == "staging" ]; then
+            echo "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID_STAGING }}" >> $GITHUB_ENV
+            echo "GCP_CREDENTIALS=${{ secrets.GCP_CREDENTIALS_STAGING }}" >> $GITHUB_ENV
+          elif [ "${{ github.event.inputs.ENVIRONMENT }}" == "prod" ]; then
+            echo "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID_PROD }}" >> $GITHUB_ENV
+            echo "GCP_CREDENTIALS=${{ secrets.GCP_CREDENTIALS_PROD }}" >> $GITHUB_ENV
+          fi
 
       - name: Configure Workload Identity Federation
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS_${{ env.ENVIRONMENT }} }}
-
-      - name: Set GCP Project ID
-        run: echo "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID_${{ env.ENVIRONMENT }} }}" >> $GITHUB_ENV
+          credentials_json: ${{ env.GCP_CREDENTIALS }}
 
       - name: Build and push Docker image
         run: |
@@ -49,5 +56,3 @@ jobs:
           service: my-service
           region: us-central1
           image: gcr.io/${{ env.GCP_PROJECT_ID }}/my-service:latest
-          # Add any environment-specific Cloud Run configuration here if needed
-          # e.g., flags: '--platform managed --allow-unauthenticated'
