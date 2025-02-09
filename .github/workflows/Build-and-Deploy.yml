@@ -31,6 +31,11 @@ jobs:
           credentials_json: ${{ secrets.GCP_CREDENTIALS_DEV }}
           secrets: inherit
 
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+  
+      - name: Configure Docker for gcloud
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build and push Docker image
         run: |
@@ -45,3 +50,4 @@ jobs:
           service: my-service
           region: us-central1
           image: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_DEV }}/rp-dev-net-repo/dotnet8-api:${VERSION}
+          secrets: inherit
