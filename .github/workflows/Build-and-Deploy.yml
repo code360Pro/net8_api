@@ -31,13 +31,13 @@ jobs:
           echo "ENVIRONMENT=${{ github.event.inputs.ENVIRONMENT }}" >> $GITHUB_ENV
           if [ "${{ github.event.inputs.ENVIRONMENT }}" == "dev" ]; then
             echo "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID_DEV }}" >> $GITHUB_ENV
-            echo "GCP_CREDENTIALS=${{ secrets.GCP_CREDENTIALS_DEV }}" >> $GITHUB_ENV
+            echo "${{ secrets.GCP_CREDENTIALS_DEV }}" > $GITHUB_ENV/GCP_CREDENTIALS.json
           elif [ "${{ github.event.inputs.ENVIRONMENT }}" == "staging" ]; then
             echo "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID_STAGING }}" >> $GITHUB_ENV
-            echo "GCP_CREDENTIALS=${{ secrets.GCP_CREDENTIALS_STAGING }}" >> $GITHUB_ENV
+            echo "${{ secrets.GCP_CREDENTIALS_STAGING }}" > $GITHUB_ENV/GCP_CREDENTIALS.json
           elif [ "${{ github.event.inputs.ENVIRONMENT }}" == "prod" ]; then
             echo "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID_PROD }}" >> $GITHUB_ENV
-            echo "GCP_CREDENTIALS=${{ secrets.GCP_CREDENTIALS_PROD }}" >> $GITHUB_ENV
+            echo "${{ secrets.GCP_CREDENTIALS_PROD }}" > $GITHUB_ENV/GCP_CREDENTIALS.json
           fi
 
       - name: Configure Workload Identity Federation
