@@ -36,8 +36,8 @@ jobs:
         run: |
          VERSION=$(git describe --tags --always) # Get the latest tag or commit hash
          docker build -t dotnet8-api:${VERSION} .  # Build with a simple name
-         docker tag my-app:${VERSION} us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/rp-dev-net-repo/dotnet8-api:${VERSION} # Tag with the full registry path
-         docker push us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/rp-dev-net-repo/dotnet8-api:${VERSION} # Push using the full path
+         docker tag dotnet8-api:${VERSION} us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_DEV }}/rp-dev-net-repo/dotnet8-api:${VERSION} # Tag with the full registry path
+         docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_DEV }}/rp-dev-net-repo/dotnet8-api:${VERSION} # Push using the full path
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0
