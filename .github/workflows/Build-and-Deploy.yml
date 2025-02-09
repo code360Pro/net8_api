@@ -1,0 +1,26 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-service:latest .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-service:latest
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: my-service
+          region: us-central1
+          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-service:latest
