@@ -44,6 +44,8 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ env.GCP_CREDENTIALS }}
+          secrets: inherit
+
 
       - name: Build and push Docker image
         run: |
