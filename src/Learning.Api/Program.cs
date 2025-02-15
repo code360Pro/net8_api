@@ -6,18 +6,20 @@ using Serilog.Sinks.GoogleCloudLogging; // Import the sink
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration
-    //.AddJsonFile("appsettings.json", optional: true)
-    .AddEnvironmentVariables(); 
+    .AddJsonFile("appsettings.json", optional: true)
+    .AddEnvironmentVariables()
+    .Build();
 
-builder.Host.UseSerilog((context, services, configuration) => configuration
-    .ReadFrom.Configuration(context.Configuration)
-    .ReadFrom.Services(services)
+// Initialize Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
     .Enrich.FromLogContext()
     .Enrich.WithExceptionDetails()
-    .Enrich.WithEnvironmentName());
+    .CreateLogger();
 
-Log.Information("Serilog has started.....!"); // Or Log.Debug, Log.Information, etc.
+builder.Host.UseSerilog();
 
+Log.Information("Serilog has started.....!");
 
 // Add services to the container.
 
