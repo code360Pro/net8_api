@@ -44,10 +44,10 @@ jobs:
          docker tag dotnet8-api:${VERSION} us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_DEV }}/rp-dev-net-repo/dotnet8-api:${VERSION} # Tag with the full registry path
          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_DEV }}/rp-dev-net-repo/dotnet8-api:${VERSION} # Push using the full path
 
-      - name: Deploy to Cloud Run
-        uses: google-github-actions/deploy-cloudrun@v0
-        with:
-          service: my-service
-          region: us-central1
-          image: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_DEV }}/rp-dev-net-repo/dotnet8-api:${VERSION}
-          secrets: inherit
+      # - name: Deploy to Cloud Run
+      #   uses: google-github-actions/deploy-cloudrun@v0
+      #   with:
+      #     service: my-service
+      #     region: us-central1
+      #     image: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_DEV }}/rp-dev-net-repo/dotnet8-api:${VERSION}
+      #     secrets: inherit

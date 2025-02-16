@@ -24,11 +24,22 @@ Log.Information("Serilog has started.....!");
 // Add services to the container.
 
 builder.Services.AddControllers();
+Log.Information("Serilog AddControllers completed.....!");
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+Log.Information("Serilog AddEndpointsApiExplorer completed.....!");
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSwaggerGen();
+    Log.Information("Serilog AddSwaggerGen completed.....!");
+}
+
 
 var app = builder.Build();
+Log.Information("Serilog Build completed.....!");
+
 
 
 
@@ -38,11 +49,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+Log.Information("Serilog IsDevelopment completed.....!");
 
 app.UseHttpsRedirection();
 
+Log.Information("Serilog UseHttpsRedirection completed.....!");
+
+
 app.UseAuthorization();
 
+Log.Information("Serilog UseAuthorization completed.....!");
+
 app.MapControllers();
+Log.Information("Serilog MapControllers completed.....!");
+
 
 app.Run();
+Log.Information("Serilog Run completed.....!");
