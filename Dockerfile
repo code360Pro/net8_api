@@ -4,6 +4,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 # Set the working directory
 WORKDIR /app
 
+
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
 # Copy the project file and restore dependencies
 COPY src/Learning.Api/*.csproj ./
 RUN dotnet restore
