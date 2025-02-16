@@ -18,9 +18,9 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
-
+var appSettings = configuration.GetSection("AppSettings");
 Log.Information("Serilog has started.....!");
-
+Log.Information($"appsettings:TestConfigMap value is {appSettings.GetValue<string>("TestConfigMap")}");
 // Add services to the container.
 
 builder.Services.AddControllers();
