@@ -27,9 +27,5 @@ WORKDIR /app
 # Copy the published output from the build stage
 COPY --from=build /app/out .
 
-# Expose the application port
-EXPOSE 80
-ENV ASPNETCORE_URLS=http://+:${PORT}
-
 # Command to run the application
 ENTRYPOINT ["dotnet", "Learning.Api.dll"]
