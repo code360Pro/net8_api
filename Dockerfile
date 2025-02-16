@@ -31,7 +31,7 @@ RUN ls -R /app
 
 
 # Command to run the application
-ENTRYPOINT ["sh", "-c", "dotnet Learning.Api.dll && ls -R /app"]
 
-#ENTRYPOINT ["dotnet", "Learning.Api.dll"]
+
+ENTRYPOINT ["dotnet", "Learning.Api.dll"]
 
