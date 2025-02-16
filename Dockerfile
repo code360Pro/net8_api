@@ -31,5 +31,7 @@ RUN ls -R /app
 
 
 # Command to run the application
-ENTRYPOINT ["sh", "-c", "ls -l /app/config && dotnet YourProject.dll"]
+ENTRYPOINT ["sh", "-c", "dotnet Learning.Api.dll && ls -R /app"]
+
 #ENTRYPOINT ["dotnet", "Learning.Api.dll"]
+
