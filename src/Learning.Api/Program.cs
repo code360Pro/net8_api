@@ -35,6 +35,7 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddSwaggerGen();
     Log.Information("Serilog AddSwaggerGen completed.....!");
 }
+builder.Services.AddHealthChecks(); // Add health checks
 
 
 var app = builder.Build();
@@ -48,8 +49,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    Log.Information("Serilog IsDevelopment completed.....!");
 }
-Log.Information("Serilog IsDevelopment completed.....!");
 
 app.UseHttpsRedirection();
 
@@ -63,6 +64,7 @@ Log.Information("Serilog UseAuthorization completed.....!");
 app.MapControllers();
 Log.Information("Serilog MapControllers completed.....!");
 
+app.MapHealthChecks("/health");
 
 app.Run();
 Log.Information("Serilog Run completed.....!");
