@@ -6,7 +6,7 @@ using Serilog.Sinks.GoogleCloudLogging; // Import the sink
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration
-    .AddJsonFile("app/config/appsettings.json")
+    .AddJsonFile("config/appsettings.json")
     .AddEnvironmentVariables()
     .Build();
 
