@@ -27,5 +27,8 @@ WORKDIR /app
 # Copy the published output from the build stage
 COPY --from=build /app/out .
 
+RUN ls -R /app
+
+
 # Command to run the application
 ENTRYPOINT ["dotnet", "Learning.Api.dll"]
