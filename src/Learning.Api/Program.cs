@@ -5,15 +5,8 @@ using Serilog.Sinks.GoogleCloudLogging; // Import the sink
 
 
     var builder = WebApplication.CreateBuilder(args);
-    string mountPath ="/app/config";
-if (builder.Environment.IsDevelopment())
-{
-    mountPath = Path.Combine(Directory.GetCurrentDirectory(), "config");
-}
-
 
     var configuration = builder.Configuration
-    .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), mountPath))
     .AddJsonFile("appsettings.json")
     .AddEnvironmentVariables()
     .Build();
@@ -29,9 +22,6 @@ builder.Host.UseSerilog();
 var appSettings = configuration.GetSection("AppSettings");
 Log.Information("Serilog has started.....!");
 Log.Information($"appsettings:TestConfigMap value is {appSettings.GetValue<string>("TestConfigMap")}");
-Log.Information($"MOUNT_PATH is {mountPath}");
-
-test.ListFilesInDirectory("/app");
 
 // Add services to the container.
 
